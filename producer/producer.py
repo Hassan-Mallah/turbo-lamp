@@ -1,4 +1,5 @@
 #  The main Python script for the producer
+
 import pika
 import json
 
@@ -30,5 +31,6 @@ channel.basic_publish(exchange='',
                       properties=pika.BasicProperties(
                           delivery_mode=2,  # Make messages persistent
                       ))
+
 # Close the connection
 connection.close()
