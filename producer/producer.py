@@ -21,16 +21,21 @@ task = {
     }
 }
 
-# Convert the task data to JSON format
-task_json = json.dumps(task)
 
-# Publish the task to the queue, use default exchange
-channel.basic_publish(exchange='',
-                      routing_key='task_queue',
-                      body=task_json,
-                      properties=pika.BasicProperties(
-                          delivery_mode=2,  # Make messages persistent
-                      ))
+# create 5 tasks
+for i in range(5):
+    task['name'] = f'task {i}'
+
+    # Convert the task data to JSON format
+    task_json = json.dumps(task)
+
+    # Publish the task to the queue, use default exchange
+    channel.basic_publish(exchange='',
+                          routing_key='task_queue',
+                          body=task_json,
+                          properties=pika.BasicProperties(
+                              delivery_mode=2,  # Make messages persistent
+                          ))
 
 # Close the connection
 connection.close()

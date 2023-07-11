@@ -2,6 +2,7 @@
 
 import pika
 import json
+from time import sleep
 
 
 # Define the callback function for processing tasks
@@ -9,10 +10,13 @@ def process_task(ch, method, properties, body):
     task = json.loads(body)
 
     # Process the task here
-    print("Consumer 1 received task:", task)
+    print("Consumer 1 received task:", task['name'])
+    sleep(5)
 
     # Acknowledge the task completion
     ch.basic_ack(delivery_tag=method.delivery_tag)
+
+    print("Consumer 1 finished task:", task['name'])
 
 
 # Establish a connection to RabbitMQ
